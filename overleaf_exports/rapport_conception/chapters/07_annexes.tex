@@ -1,0 +1,156 @@
+%%======================================================================
+%%  Annexes
+%%======================================================================
+\chapter*{Annexes}
+\addcontentsline{toc}{chapter}{Annexes}
+
+%%----------------------------------------------------------------------
+\section*{Annexe A : Liste complète des entités JPA}
+\addcontentsline{toc}{section}{Annexe A : Liste complète des entités JPA}
+
+\begin{longtable}{clll}
+\caption{Liste des 25 entités du backend} \\
+\toprule
+\textbf{\#} & \textbf{Entité} & \textbf{Table} & \textbf{Type} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{\#} & \textbf{Entité} & \textbf{Table} & \textbf{Type} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+1  & User           & users             & Classe abstraite (base) \\
+2  & Admin          & users             & Hérite de User \\
+3  & Enseignant     & users             & Hérite de User \\
+4  & Etudiant       & users             & Hérite de User \\
+5  & Departement    & departements      & Entité indépendante \\
+6  & Groupe         & groupes           & Entité indépendante \\
+7  & Classe         & classes           & Entité indépendante \\
+8  & Cours          & cours             & Entité avec relations \\
+9  & Matiere        & matieres          & Entité avec relations \\
+10 & Note           & notes             & Entité avec relations \\
+11 & Devoir         & devoirs           & Entité avec relations \\
+12 & Soumission     & soumissions       & Entité avec relations \\
+13 & Evaluation     & evaluations       & Entité avec relations \\
+14 & Absence        & absences          & Entité avec relations \\
+15 & Justification  & justifications    & Entité avec relations \\
+16 & EmploiDuTemps  & emploi\_du\_temps & Entité avec relations \\
+17 & Inscription    & inscriptions      & Entité avec relations \\
+18 & Projet         & projets           & Entité avec relations \\
+19 & Demande        & demandes          & Entité avec relations \\
+20 & Demande\_Stage & demandes\_stage   & Entité avec relations \\
+21 & Reclamation    & reclamations      & Entité avec relations \\
+22 & ReclamationNote& reclamation\_notes& Entité avec workflow \\
+23 & Notification   & notifications     & Entité avec workflow \\
+24 & Commentaire    & commentaires      & Entité (soft delete) \\
+25 & Role           & —                 & Enum (ADMIN, ENSEIGNANT, ETUDIANT) \\
+\end{longtable}
+
+%%----------------------------------------------------------------------
+\section*{Annexe B : Liste complète des contrôleurs REST}
+\addcontentsline{toc}{section}{Annexe B : Liste complète des contrôleurs REST}
+
+\begin{longtable}{cllc}
+\caption{Les 28 contrôleurs REST du backend} \\
+\toprule
+\textbf{\#} & \textbf{Contrôleur} & \textbf{URL de base} & \textbf{Endpoints} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{\#} & \textbf{Contrôleur} & \textbf{URL de base} & \textbf{Endpoints} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+1  & HelloController           & /api            & 2 \\
+2  & UserController            & /api/users      & 9 \\
+3  & AdminController           & /api/admins     & 6 \\
+4  & EnseignantController      & /api/enseignants& 7 \\
+5  & EtudiantController        & /api/etudiants  & 7 \\
+6  & DepartementController     & /api/departements& 6 \\
+7  & GroupeController          & /api/groupes    & 6 \\
+8  & ClasseController          & /api/classes    & 7 \\
+9  & CoursController           & /api/cours      & 9 \\
+10 & MatiereController         & /api/matieres   & 5 \\
+11 & NoteController            & /api/notes      & 7 \\
+12 & DevoirController          & /api/devoirs    & 7 \\
+13 & SoumissionController      & /api/soumissions& 9 \\
+14 & AbsenceController         & /api/absences   & 7 \\
+15 & JustificationController   & /api/justifications & 10 \\
+16 & EmploiDuTempsController   & /api/emploi-du-temps& 6 \\
+17 & InscriptionController     & /api/inscriptions& 8 \\
+18 & ProjetController          & /api/projets    & 6 \\
+19 & EvaluationController      & /api/evaluations& — \\
+20 & DemandeController         & /api/demandes   & 6 \\
+21 & Demande\_StageController  & /api/demandes-stage& 6 \\
+22 & ReclamationController     & /api/reclamations& 6 \\
+23 & ReclamationNoteController & /api/reclamation-notes& 8 \\
+24 & NotificationController    & /api/notifications& 14 \\
+25 & DashboardController       & /api/dashboard  & 3 \\
+26 & ActionsController         & /api/actions    & 4 \\
+27 & CommentaireController     & /api/commentaires& 5 \\
+28 & FileDownloadController    & /api/files      & 2 \\
+\end{longtable}
+
+%%----------------------------------------------------------------------
+\section*{Annexe C : Schéma de la base de données}
+\addcontentsline{toc}{section}{Annexe C : Schéma de la base de données}
+
+\begin{table}[H]
+\centering
+\caption{Tables de la base de données}
+\begin{tabularx}{\textwidth}{lXc}
+\toprule
+\textbf{Table} & \textbf{Description} & \textbf{Colonnes} \\
+\midrule
+users & Utilisateurs (héritage SINGLE\_TABLE) & 14 \\
+departements & Départements & 5 \\
+groupes & Groupes d'étudiants & 6 \\
+classes & Classes d'enseignement & 6 \\
+cours & Cours/Modules & 9 \\
+cours\_etudiants & Table de jointure Cours ↔ Étudiant & 2 \\
+matieres & Matières & 7 \\
+notes & Notes des étudiants & 8 \\
+devoirs & Devoirs/Travaux assignés & 8 \\
+soumissions & Soumissions de devoirs & 11 \\
+evaluations & Évaluations planifiées & 9 \\
+absences & Absences enregistrées & 8 \\
+justifications & Justifications d'absences & 8 \\
+emploi\_du\_temps & Emploi du temps & 7 \\
+inscriptions & Inscriptions étudiant-classe & 8 \\
+projets & Projets collaboratifs & 7 \\
+projet\_etudiants & Table de jointure Projet ↔ Étudiant & 2 \\
+demandes & Demandes administratives & 9 \\
+demandes\_stage & Demandes de stage & 8 \\
+reclamations & Réclamations & 8 \\
+reclamation\_notes & Réclamations de notes & 12 \\
+notifications & Notifications & 13 \\
+commentaires & Commentaires & 7 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+%%----------------------------------------------------------------------
+\section*{Annexe D : Collection Postman}
+\addcontentsline{toc}{section}{Annexe D : Collection Postman}
+
+Une collection Postman complète est fournie avec le projet dans le fichier :
+
+\texttt{docs/Education\_Platform\_API.postman\_collection.json}
+
+\vspace{0.3cm}
+
+Cette collection contient l'ensemble des requêtes HTTP préconfigurées pour tester les 90+ endpoints de l'API, organisées par ressource. Elle peut être importée directement dans Postman.
+
+\vspace{0.3cm}
+
+\textbf{Pour l'importer :}
+\begin{enumerate}[noitemsep]
+    \item Ouvrir Postman ;
+    \item Cliquer sur « Import » ;
+    \item Sélectionner le fichier JSON ;
+    \item Toutes les requêtes sont alors disponibles avec les URL et les corps pré-remplis.
+\end{enumerate}
+
+\newpage

@@ -1,0 +1,81 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "🚀 Start All (Backend + Frontend)",
+			"dependsOn": [
+				"backend:start",
+				"frontend:start"
+			],
+			"dependsOrder": "sequence",
+			"problemMatcher": [],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		},
+		{
+			"label": "backend:start",
+			"type": "shell",
+			"command": "cd backend; mvn spring-boot:run",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"isBackground": true,
+			"problemMatcher": [],
+			"presentation": {
+				"reveal": "always",
+				"panel": "new",
+				"group": "backend"
+			}
+		},
+		{
+			"label": "backend:start:mysql",
+			"type": "shell",
+			"command": "cd backend; mvn spring-boot:run -Dspring-boot.run.profiles=mysql",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"isBackground": true,
+			"problemMatcher": [],
+			"presentation": {
+				"reveal": "always",
+				"panel": "new",
+				"group": "backend"
+			}
+		},
+		{
+			"label": "frontend:start",
+			"type": "shell",
+			"command": "cmd /d /c npm.cmd run dev",
+			"options": {
+				"cwd": "${workspaceFolder}/front2"
+			},
+			"isBackground": true,
+			"problemMatcher": [],
+			"presentation": {
+				"reveal": "always",
+				"panel": "new",
+				"group": "frontend"
+			}
+		},
+		{
+			"label": "backend:build",
+			"type": "shell",
+			"command": "cd backend; mvn clean package -DskipTests",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "frontend:build",
+			"type": "shell",
+			"command": "cmd /d /c npm.cmd run build",
+			"options": {
+				"cwd": "${workspaceFolder}/front2"
+			},
+			"problemMatcher": []
+		}
+	]
+}

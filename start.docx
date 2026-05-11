@@ -1,0 +1,7 @@
+# Backend (avec MySQL)
+cd backend
+mvn.cmd spring-boot:run "-Dspring-boot.run.profiles=mysql"
+
+# Frontend  
+cd frontend
+npm run dev

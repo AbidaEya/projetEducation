@@ -1,0 +1,15 @@
+{
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "java.import.projectSelection": [
+        "backend/pom.xml"
+    ],
+    "java.project.rootPath": "backend",
+    "editor.formatOnSave": true,
+    "files.exclude": {
+        "**/node_modules": true,
+        "**/target": true,
+        "**/*.class": true,
+        "**/logs": true,
+        "**/.run-logs": true
+    }
+}

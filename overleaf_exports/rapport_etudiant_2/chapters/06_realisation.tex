@@ -1,0 +1,63 @@
+\chapter{Réalisation}
+
+\section{Fonctionnalités réalisées (Lot B)}
+\begin{itemize}
+  \item Développement des pages React/TypeScript pour les rôles enseignant et étudiant.
+  \item Configuration du routage applicatif avec routes protégées et redirections par rôle.
+  \item Intégration des modules : cours, devoirs, soumissions, notes, absences, demandes, réclamations, notifications.
+  \item Mise en place de composants réutilisables et d'un écran générique de gestion des ressources.
+  \item Validation des parcours fonctionnels de bout en bout côté interface.
+\end{itemize}
+
+\section{Résultats fonctionnels obtenus}
+Le lot frontend a permis de livrer une interface exploitable avec des parcours métier complets. Les utilisateurs peuvent accéder à leurs fonctionnalités via un tableau de bord unifié et des pages dédiées.
+
+Les points majeurs réalisés :
+\begin{itemize}
+  \item espace enseignant : gestion cours/devoirs/évaluations/emploi du temps ;
+  \item espace étudiant : consultation cours, soumissions, notes, absences, demandes ;
+  \item espace administrateur : supervision des ressources et modules de contrôle ;
+  \item navigation cohérente et consommation fiable des APIs backend.
+\end{itemize}
+
+\section{Contraintes rencontrées et solutions apportées}
+\begin{tabularx}{\textwidth}{lX}
+\toprule
+\textbf{Contrainte} & \textbf{Solution appliquée} \\
+\midrule
+Multiplicité des profils utilisateurs & Mise en place d'un routage protégé avec redirection par rôle. \\
+Hétérogénéité des formulaires métier & Utilisation de composants réutilisables et d'une page générique ResourcePage. \\
+Synchronisation avec les APIs backend & Alignement des champs frontend avec les contrats API et gestion explicite des erreurs. \\
+Lisibilité de l'interface & Structuration par modules et amélioration de l'ergonomie de navigation. \\
+\bottomrule
+\end{tabularx}
+
+\section{Compétences acquises}
+Ce lot a permis de renforcer les compétences suivantes :
+\begin{itemize}
+  \item développement d'interfaces React/TypeScript ;
+  \item conception de navigation applicative par rôles ;
+  \item intégration d'API REST dans une SPA ;
+  \item gestion des états UI (chargement, succès, erreur) ;
+  \item validation fonctionnelle des parcours utilisateur.
+\end{itemize}
+
+\section{Livrables du Lot B}
+\begin{itemize}
+  \item pages frontend par rôle (admin, enseignant, étudiant) ;
+  \item configuration complète des routes et menus de navigation ;
+  \item composants réutilisables pour formulaires et ressources ;
+  \item scénarios de test fonctionnels côté interface.
+\end{itemize}
+
+\section{Division des tâches du projet}
+\begin{tabularx}{\textwidth}{lX}
+\toprule
+\textbf{Composant} & \textbf{Responsabilité Lot B (ce rapport)} \\
+\midrule
+Frontend & Architecture React, composants et routage applicatif. \\
+Parcours utilisateurs & Implémentation des espaces enseignant/étudiant et formulaires métier. \\
+Intégration API & Consommation des endpoints backend et traitement des états de chargement/erreur. \\
+Qualité UX & Responsive design, cohérence visuelle, lisibilité et fluidité de navigation. \\
+\bottomrule
+\end{tabularx}

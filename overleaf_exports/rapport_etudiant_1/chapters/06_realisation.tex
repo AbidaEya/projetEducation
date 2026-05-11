@@ -1,0 +1,64 @@
+\chapter{Réalisation}
+
+\section{Fonctionnalités réalisées (Lot A)}
+\begin{itemize}
+  \item Implémentation complète du backend Spring Boot (controllers, services, repositories).
+  \item Développement des modules administratifs : demandes, absences, justifications, réclamations, notifications.
+  \item Intégration de la persistance avec JPA/Hibernate et gestion des profils de base de données.
+  \item Mise en place de la gestion d'erreurs globale et standardisation des réponses API.
+  \item Validation fonctionnelle de l'API via tests manuels (Postman) et vérification des scénarios critiques.
+\end{itemize}
+
+\section{Résultats techniques obtenus}
+Le lot backend a permis d'obtenir une API exploitable par le frontend avec un nombre élevé d'endpoints (environ 90+), couvrant les fonctionnalités principales du système. Les services sont organisés selon une logique métier claire et une architecture maintenable.
+
+Les points notables sont :
+\begin{itemize}
+  \item hiérarchie d'utilisateurs (admin/enseignant/étudiant) ;
+  \item gestion des départements, cours, matières, absences et demandes ;
+  \item workflows administratifs suivis de bout en bout ;
+  \item base de code prête à l'évolution (sécurité, tests automatiques, monitoring).
+\end{itemize}
+
+\section{Contraintes rencontrées et solutions apportées}
+\begin{tabularx}{\textwidth}{lX}
+\toprule
+\textbf{Contrainte} & \textbf{Solution appliquée} \\
+\midrule
+Évolution du modèle de données & Refactoring des entités et consolidation des relations JPA pour éviter les incohérences. \\
+Hétérogénéité des réponses API & Normalisation des retours via un format de réponse commun et gestion centralisée des erreurs. \\
+Synchronisation frontend/backend & Stabilisation des contrats d'API et validation systématique des endpoints critiques. \\
+Qualité du code & Structuration stricte en couches (Controller/Service/Repository) pour améliorer la maintenabilité. \\
+\bottomrule
+\end{tabularx}
+
+\section{Compétences acquises}
+Au cours de ce lot, les compétences suivantes ont été consolidées :
+\begin{itemize}
+  \item conception d'API REST avec Spring Boot ;
+  \item modélisation relationnelle et mapping JPA/Hibernate ;
+  \item organisation d'un backend en architecture multicouche ;
+  \item gestion des workflows administratifs ;
+  \item diagnostic et résolution de problèmes d'intégration applicative.
+\end{itemize}
+
+\section{Livrables du Lot A}
+\begin{itemize}
+  \item code source backend (modules model/repository/service/controller) ;
+  \item endpoints API documentés ;
+  \item jeux de tests manuels Postman ;
+  \item structure de données cohérente pour intégration frontend.
+\end{itemize}
+
+\section{Division des tâches du projet}
+\begin{tabularx}{\textwidth}{lX}
+\toprule
+\textbf{Composant} & \textbf{Responsabilité Lot A (ce rapport)} \\
+\midrule
+Backend & Architecture et logique métier Java/Spring. \\
+Base de données & Modélisation, mapping JPA et cohérence des données. \\
+API & Endpoints REST, validation et gestion des exceptions. \\
+Processus Admin & Implémentation complète des workflows administratifs. \\
+Intégration & Mise à disposition des services consommés par le frontend (contrats API stables). \\
+\bottomrule
+\end{tabularx}

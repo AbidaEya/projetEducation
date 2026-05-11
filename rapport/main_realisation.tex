@@ -1,0 +1,139 @@
+%%======================================================================
+%%  Rapport de stage – Version Réalisation (EduPlatform)
+%%  Compilateur : pdfLaTeX  •  Encodage : UTF-8
+%%======================================================================
+\documentclass[12pt,a4paper,oneside]{report}
+
+%% ── Encodage & langue ─────────────────────────────────────────────────
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+
+%% ── Mise en page ──────────────────────────────────────────────────────
+\usepackage[
+  top=2.5cm, bottom=2.5cm,
+  left=2.5cm, right=2.5cm
+]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+
+%% ── Graphiques & couleurs ─────────────────────────────────────────────
+\usepackage{graphicx}
+\usepackage[dvipsnames,svgnames,table]{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows.meta,positioning,fit,calc}
+
+%% ── Tableaux ──────────────────────────────────────────────────────────
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{tabularx}
+\usepackage{multirow}
+
+%% ── Code source (listings) ───────────────────────────────────────────
+\usepackage{listings}
+\lstset{
+  basicstyle=\small\ttfamily,
+  keywordstyle=\bfseries\color{NavyBlue},
+  commentstyle=\itshape\color{ForestGreen},
+  stringstyle=\color{BrickRed},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  numbersep=8pt,
+  frame=single,
+  framesep=4pt,
+  backgroundcolor=\color{gray!5},
+  breaklines=true,
+  showstringspaces=false,
+  tabsize=2,
+  captionpos=b,
+  literate={é}{{\'e}}1 {è}{{\`e}}1 {ê}{{\^e}}1 {à}{{\`a}}1 {ù}{{\`u}}1
+           {û}{{\^u}}1 {ô}{{\^o}}1 {î}{{\^i}}1 {ç}{{\c{c}}}1
+}
+\lstdefinelanguage{JavaScript}{
+  keywords={const,let,var,function,return,if,else,for,while,class,
+            import,export,from,default,async,await,new,this,try,catch},
+  sensitive=true,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]',
+  morestring=[b]"
+}
+
+%% ── Liens & PDF ───────────────────────────────────────────────────────
+\usepackage[
+  colorlinks=true,
+  linkcolor=NavyBlue,
+  urlcolor=RoyalBlue,
+  citecolor=ForestGreen
+]{hyperref}
+
+%% ── Divers ────────────────────────────────────────────────────────────
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{pifont}      % pour les check marks ✓
+
+%% ── En-têtes / pieds de page ─────────────────────────────────────────
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\leftmark}
+\fancyhead[R]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+%% ── Titres de chapitres ──────────────────────────────────────────────
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries\color{NavyBlue}}
+  {\chaptertitlename\ \thechapter}{20pt}{\Huge}
+\titlespacing*{\chapter}{0pt}{-20pt}{30pt}
+
+%% ── Commandes personnalisées ──────────────────────────────────────────
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\tech}[1]{\texttt{\textbf{#1}}}
+
+%%======================================================================
+\begin{document}
+
+%% ── PAGE DE GARDE ────────────────────────────────────────────────────
+\input{chapters/00_page_garde}
+
+%% ── REMERCIEMENTS ────────────────────────────────────────────────────
+\input{chapters/00_remerciements}
+
+%% ── TABLE DES MATIÈRES ───────────────────────────────────────────────
+\tableofcontents
+\newpage
+
+%% ── LISTE DES FIGURES ────────────────────────────────────────────────
+\listoffigures
+\newpage
+
+%% ── LISTE DES TABLEAUX ──────────────────────────────────────────────
+\listoftables
+\newpage
+
+%% ── INTRODUCTION GÉNÉRALE ────────────────────────────────────────────
+\input{chapters/00_introduction}
+
+%% ── CHAPITRE 1 : Étude de l'organisme ────────────────────────────────
+\input{chapters/01_etude_organisme}
+
+%% ── CHAPITRE 2 : Environnement de développement ─────────────────────
+\input{chapters/02_environnement}
+
+%% ── CHAPITRE 4 : Réalisation du projet ──────────────────────────────
+\input{chapters/04_realisation}
+
+%% ── CONCLUSION ───────────────────────────────────────────────────────
+\input{chapters/05_conclusion}
+
+%% ── BIBLIOGRAPHIE ────────────────────────────────────────────────────
+\input{chapters/06_bibliographie}
+
+%% ── ANNEXES ──────────────────────────────────────────────────────────
+\input{chapters/07_annexes}
+
+\end{document}

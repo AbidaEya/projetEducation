@@ -1,0 +1,24 @@
+\chapter{Etude conceptuelle}
+
+\section*{Modélisation}
+\addcontentsline{toc}{section}{Modélisation}
+L'approche conceptuelle adoptée repose sur la modélisation UML :
+\begin{itemize}
+	\item \textbf{Diagramme de classes} : structuration des entités principales (User, Admin, Enseignant, Étudiant, Cours, Demande, Notification, etc.) et de leurs relations ;
+	\item \textbf{Cas d'utilisation} : identification des fonctionnalités par acteur ;
+	\item \textbf{Diagrammes de séquence} : description des échanges entre contrôleurs, services et repositories.
+\end{itemize}
+
+Le backend suit une architecture 3-tiers : couche présentation API, couche métier, couche persistance.
+
+\section*{Répartition des tâches conceptuelles (Lot A)}
+\addcontentsline{toc}{section}{Répartition des tâches conceptuelles (Lot A)}
+\begin{tabularx}{\textwidth}{lX}
+\toprule
+\textbf{Axe} & \textbf{Tâches Lot A} \\
+\midrule
+Données & Modélisation des entités JPA (environ 25 entités) et des relations inter-modules. \\
+API & Définition des endpoints REST, des objets de réponse et des règles de validation. \\
+Administration & Conception des workflows de traitement des demandes, absences, réclamations et notifications. \\
+\bottomrule
+\end{tabularx}

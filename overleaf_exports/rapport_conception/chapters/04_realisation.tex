@@ -1,0 +1,571 @@
+%%======================================================================
+%%  Chapitre 4 : Réalisation du projet
+%%======================================================================
+\chapter{Réalisation du projet}
+
+Ce chapitre présente les interfaces réalisées et les fonctionnalités implémentées pour chaque espace utilisateur de la plateforme \textit{EduPlatform}. Chaque section décrit les pages développées, leur rôle et les interactions principales.
+
+%% ── CONSIGNE CAPTURES D'ÉCRAN ────────────────────────────────────────
+%% Pour chaque interface, ajoutez une capture d'écran en décommentant
+%% les blocs \begin{figure}...\end{figure} et en plaçant vos images
+%% dans le dossier rapport/images/
+%% ─────────────────────────────────────────────────────────────────────
+
+%%======================================================================
+\section{Page d'accueil (Landing Page)}
+
+\subsection{Description}
+
+La page d'accueil constitue le point d'entrée de la plateforme. Elle a pour objectif de présenter l'application aux visiteurs et de les orienter vers la page de connexion. Si l'utilisateur est déjà authentifié (session stockée dans le \texttt{localStorage}), il est automatiquement redirigé vers son tableau de bord.
+
+\vspace{0.3cm}
+
+La page est composée des sections suivantes :
+\begin{itemize}[noitemsep]
+    \item \textbf{Barre de navigation flottante} avec le logo, les liens d'ancrage et un bouton de connexion ;
+    \item \textbf{Section Hero} avec un titre accrocheur, une description de la plateforme et un appel à l'action (\textit{Call To Action}) animé ;
+    \item \textbf{Section Fonctionnalités} présentant 6 cartes : Gestion des cours, Notes \& Évaluations, Emploi du temps, Notifications intelligentes, Suivi des absences, Administration simplifiée ;
+    \item \textbf{Section Statistiques} affichant les chiffres clés de la plateforme ;
+    \item \textbf{Section Rôles} décrivant les fonctionnalités spécifiques à chaque type d'utilisateur (Administrateur, Enseignant, Étudiant) ;
+    \item \textbf{Bascule mode sombre} accessible depuis la barre de navigation.
+\end{itemize}
+
+La page utilise des animations \textbf{Framer Motion} pour les transitions et les effets visuels (orbes de dégradé, apparition progressive des cartes).
+
+\subsection{Réalisation de la page}
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.95\textwidth]{images/landing_page.png}
+%     \caption{Page d'accueil de la plateforme EduPlatform}
+%     \label{fig:landing}
+% \end{figure}
+
+La page d'accueil est implémentée dans le composant \texttt{LandingPage.tsx}. Le design est entièrement responsive grâce à Tailwind CSS, avec des adaptations pour mobile, tablette et desktop.
+
+%%======================================================================
+\section{Page de connexion (Login)}
+
+\subsection{Description}
+
+La page de connexion permet à l'utilisateur de s'authentifier en sélectionnant son rôle, puis en saisissant son adresse email et son mot de passe.
+
+\vspace{0.3cm}
+
+\textbf{Caractéristiques de l'interface :}
+\begin{itemize}[noitemsep]
+    \item \textbf{Sélecteur de rôle à 3 onglets} : Admin, Enseignant, Étudiant — chaque onglet affiche des identifiants de démonstration pré-remplis ;
+    \item \textbf{Champs de saisie} : email et mot de passe avec un bouton de visibilité du mot de passe ;
+    \item \textbf{Bouton de connexion} avec indicateur de chargement ;
+    \item \textbf{Messages d'erreur} en cas d'identifiants incorrects ;
+    \item \textbf{Mode sombre} : la page s'adapte au thème choisi.
+\end{itemize}
+
+\vspace{0.3cm}
+
+\textbf{Identifiants de démonstration :}
+
+\begin{table}[H]
+\centering
+\caption{Identifiants de démonstration}
+\label{tab:demo_credentials}
+\begin{tabular}{lll}
+\toprule
+\textbf{Rôle} & \textbf{Email} & \textbf{Mot de passe} \\
+\midrule
+Administrateur & admin@education.com & admin123 \\
+Enseignant & jean.dupont@education.com & pass123 \\
+Étudiant & pierre.bernard@education.com & pass123 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Réalisation de la page}
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.85\textwidth]{images/login_page.png}
+%     \caption{Page de connexion avec sélecteur de rôle}
+%     \label{fig:login}
+% \end{figure}
+
+\textbf{Flux d'authentification :}
+\begin{enumerate}[noitemsep]
+    \item L'utilisateur sélectionne son rôle et saisit ses identifiants ;
+    \item Le frontend appelle l'endpoint approprié : \texttt{GET /api/\{role\}s/by-email/\{email\}} ;
+    \item Si l'utilisateur existe et que le mot de passe correspond, ses informations sont stockées dans le \texttt{localStorage} ;
+    \item L'utilisateur est redirigé vers \texttt{/dashboard/\{role\}}.
+\end{enumerate}
+
+%%======================================================================
+\section{Espace Administrateur}
+
+L'administrateur dispose du panneau de gestion le plus complet. Son espace comprend un tableau de bord synthétique et 8 pages de gestion spécialisées.
+
+\subsection{Tableau de bord (Dashboard)}
+
+Le tableau de bord administrateur offre une vue d'ensemble globale de la plateforme à travers :
+
+\begin{itemize}[noitemsep]
+    \item \textbf{8 cartes statistiques} : nombre d'étudiants, d'enseignants, de cours, de départements, d'absences, de demandes, de soumissions et de notes — chaque carte est cliquable et redirige vers la page de gestion correspondante ;
+    \item \textbf{Indicateur de qualité de correction} : barre de progression affichant le pourcentage de soumissions corrigées par rapport aux soumissions en attente ;
+    \item \textbf{Graphique « Absences par classe »} : diagramme en barres montrant le top 5 des classes avec le plus d'absences ;
+    \item \textbf{Actions rapides} : raccourcis vers les pages les plus utilisées (demandes de stage, réclamations, justifications, notifications) ;
+    \item \textbf{Liste des dernières demandes} : aperçu des demandes récentes avec leur statut.
+\end{itemize}
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.95\textwidth]{images/admin_dashboard.png}
+%     \caption{Tableau de bord de l'administrateur}
+%     \label{fig:admin_dashboard}
+% \end{figure}
+
+\subsection{Gestion des demandes}
+
+La page \texttt{AdminDemandes} permet à l'administrateur de gérer les demandes administratives des étudiants (attestations, autorisations, etc.) et les demandes de stage.
+
+\vspace{0.3cm}
+
+\textbf{Fonctionnalités :}
+\begin{itemize}[noitemsep]
+    \item \textbf{Liste des demandes} avec filtrage par statut (En attente, Acceptée, Refusée) et par urgence ;
+    \item \textbf{Détail de chaque demande} : type, description, étudiant demandeur, date ;
+    \item \textbf{Actions} : accepter ou refuser une demande avec mise à jour du statut en temps réel ;
+    \item Interface dédiée \texttt{AdminDemandesStage} pour les demandes spécifiques de stage (entreprise, responsable de stage, statut).
+\end{itemize}
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.95\textwidth]{images/admin_demandes.png}
+%     \caption{Gestion des demandes administratives}
+%     \label{fig:admin_demandes}
+% \end{figure}
+
+\subsection{Gestion des absences}
+
+La page \texttt{AdminAbsences} offre une vue centralisée de toutes les absences enregistrées.
+
+\begin{itemize}[noitemsep]
+    \item \textbf{Tableau des absences} avec colonnes : étudiant, cours, enseignant, date, statut ;
+    \item \textbf{Filtrage} par statut (Justifiée, Non justifiée, En attente) ;
+    \item \textbf{Détail} : accès aux informations complètes de chaque absence ;
+    \item \textbf{Statistiques visuelles} : nombre total d'absences par statut.
+\end{itemize}
+
+\subsection{Gestion des justifications}
+
+La page \texttt{AdminJustifications} permet de traiter les justifications d'absences soumises par les étudiants.
+
+\begin{itemize}[noitemsep]
+    \item \textbf{Liste des justifications} avec statut (En attente, Consultée, Acceptée, Refusée) ;
+    \item \textbf{Visualisation du document} joint (PDF, image) ;
+    \item \textbf{Actions} : accepter ou refuser la justification, ce qui met automatiquement à jour le statut de l'absence associée ;
+    \item \textbf{Filtre « En attente »} pour prioriser le traitement.
+\end{itemize}
+
+\subsection{Gestion des soumissions}
+
+La page \texttt{AdminSoumissions} donne une vue d'ensemble de toutes les soumissions de devoirs.
+
+\begin{itemize}[noitemsep]
+    \item \textbf{Tableau complet} : étudiant, devoir, date de soumission, note, statut d'évaluation ;
+    \item \textbf{Filtrage} par statut (Évaluée / En attente) ;
+    \item \textbf{Détail} : accès au contenu de la soumission et au fichier soumis ;
+    \item \textbf{Statistiques} : nombre de soumissions évaluées vs en attente.
+\end{itemize}
+
+\subsection{Gestion des notes}
+
+La page \texttt{AdminNotes} permet la consultation et la supervision de toutes les notes attribuées.
+
+\begin{itemize}[noitemsep]
+    \item \textbf{Vue administrative} enrichie (via l'endpoint \texttt{/api/notes/admin-view}) affichant les noms complets des étudiants et des matières ;
+    \item \textbf{Calcul de la moyenne} par étudiant ;
+    \item \textbf{Code couleur} : notes supérieures à 10 en vert, inférieures en rouge ;
+    \item \textbf{Export possible} des données.
+\end{itemize}
+
+\subsection{Gestion des réclamations}
+
+La page \texttt{AdminReclamations} centralise le traitement des réclamations.
+
+\begin{itemize}[noitemsep]
+    \item \textbf{Réclamations générales} : motif, type, urgence, étudiant, statut ;
+    \item \textbf{Réclamations de notes} : workflow spécifique en multi-étapes :
+    \begin{enumerate}[noitemsep]
+        \item L'étudiant dépose une réclamation de note ;
+        \item L'administrateur l'examine et la transfère à l'enseignant concerné ;
+        \item L'enseignant accepte ou refuse avec une nouvelle note proposée ;
+    \end{enumerate}
+    \item \textbf{Indicateur d'urgence} pour prioriser le traitement.
+\end{itemize}
+
+\subsection{Gestion des notifications}
+
+La page \texttt{AdminNotifications} gère le système de notifications de la plateforme.
+
+\begin{itemize}[noitemsep]
+    \item \textbf{Envoi de notifications} :
+    \begin{itemize}[noitemsep]
+        \item Notification ciblée à un utilisateur spécifique ;
+        \item Diffusion (\textit{broadcast}) à tous les utilisateurs d'un rôle ;
+    \end{itemize}
+    \item \textbf{Workflow d'approbation} : les notifications des enseignants passent par une validation administrateur avant envoi ;
+    \item \textbf{Types de notifications} : DEVOIR\_UPLOAD, ETUDIANT\_ABSENT, DEADLINE\_PROCHE, ANNONCE ;
+    \item \textbf{Pièces jointes} : possibilité d'attacher un fichier à une notification ;
+    \item \textbf{Liste des notifications en attente d'approbation} avec actions approuver/rejeter.
+\end{itemize}
+
+%%======================================================================
+\section{Espace Enseignant}
+
+L'enseignant dispose d'un espace centré sur la gestion pédagogique : cours, devoirs, évaluations et suivi des étudiants.
+
+\subsection{Tableau de bord (Dashboard)}
+
+Le tableau de bord enseignant présente :
+\begin{itemize}[noitemsep]
+    \item \textbf{4 cartes statistiques} : « Mes Cours » (nombre de cours assignés), « Devoirs » (nombre de devoirs créés), « Soumissions » (nombre total de soumissions reçues), « À évaluer » (soumissions non encore notées) ;
+    \item \textbf{Actions rapides} : raccourcis vers Évaluations, Emploi du temps, Réclamations de notes, Notifications ;
+    \item \textbf{Liste des dernières soumissions} avec le statut d'évaluation (corrigée / en attente) et accès rapide.
+\end{itemize}
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.95\textwidth]{images/enseignant_dashboard.png}
+%     \caption{Tableau de bord de l'enseignant}
+%     \label{fig:ens_dashboard}
+% \end{figure}
+
+\subsection{Gestion des cours}
+
+La page \texttt{EnseignantCours} permet à l'enseignant de gérer les cours qui lui sont assignés.
+
+\begin{itemize}[noitemsep]
+    \item \textbf{Liste des cours} de l'enseignant avec : nom, description, coefficient, volume horaire, département ;
+    \item \textbf{Détail du cours} : liste des étudiants inscrits, ressources pédagogiques associées ;
+    \item \textbf{Upload de ressources} : possibilité de téléverser des fichiers (PDF, documents) associés au cours via l'endpoint \texttt{POST /api/cours/\{id\}/upload-resource} ;
+    \item \textbf{Téléchargement} des ressources par les étudiants via \texttt{/api/files/download}.
+\end{itemize}
+
+\subsection{Gestion des évaluations}
+
+La page \texttt{EnseignantEvaluations} permet de gérer les épreuves et évaluations.
+
+\begin{itemize}[noitemsep]
+    \item \textbf{Planification} d'évaluations : titre, date, durée (minutes), description, note maximale ;
+    \item \textbf{Association à une classe} et à l'enseignant ;
+    \item \textbf{Liste des évaluations} planifiées avec leurs détails.
+\end{itemize}
+
+\subsection{Emploi du temps}
+
+La page \texttt{EnseignantEmploiDuTemps} affiche l'emploi du temps de l'enseignant.
+
+\begin{itemize}[noitemsep]
+    \item \textbf{Vue hebdomadaire} organisée par jour (Lundi à Samedi) ;
+    \item \textbf{Créneaux horaires} affichant : cours, heure de début, heure de fin, salle ;
+    \item \textbf{Filtrage par cours} de l'enseignant connecté.
+\end{itemize}
+
+\subsection{Réclamations de notes}
+
+La page \texttt{EnseignantReclamationsNotes} permet de traiter les réclamations de notes transférées par l'administrateur.
+
+\begin{itemize}[noitemsep]
+    \item \textbf{Liste des réclamations} en attente pour l'enseignant ;
+    \item Pour chaque réclamation : étudiant, matière, ancienne note, motif de la réclamation ;
+    \item \textbf{Actions} : accepter (en proposant une nouvelle note) ou refuser avec un commentaire.
+\end{itemize}
+
+\subsection{Notifications}
+
+La page \texttt{EnseignantNotifications} permet à l'enseignant d'envoyer des notifications et de consulter ses propres notifications.
+
+\begin{itemize}[noitemsep]
+    \item \textbf{Envoi de notification} à un étudiant spécifique ou diffusion à un groupe ;
+    \item \textbf{Note importante} : les notifications envoyées par l'enseignant sont soumises à l'\textbf{approbation de l'administrateur} avant d'être transmises ;
+    \item \textbf{Consultation} des notifications reçues (de l'administration).
+\end{itemize}
+
+%%======================================================================
+\section{Espace Étudiant}
+
+L'espace étudiant est le plus riche en termes de pages, offrant un accès complet aux ressources pédagogiques, aux devoirs, aux notes et aux services administratifs.
+
+\subsection{Tableau de bord (Dashboard)}
+
+Le tableau de bord étudiant affiche :
+\begin{itemize}[noitemsep]
+    \item \textbf{4 cartes statistiques} : « Cours » (nombre de cours inscrits), « Devoirs » (devoirs à rendre), « Moyenne » (calculée dynamiquement à partir des notes), « Absences » (nombre total d'absences) ;
+    \item \textbf{Accès rapide} : raccourcis vers Soumissions, Emploi du temps, Demandes, Stages ;
+    \item \textbf{Dernières notes} : liste des notes récentes avec un code couleur (vert $\geq$ 10, rouge $<$ 10).
+\end{itemize}
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.95\textwidth]{images/etudiant_dashboard.png}
+%     \caption{Tableau de bord de l'étudiant}
+%     \label{fig:etu_dashboard}
+% \end{figure}
+
+\subsection{Consultation des cours}
+
+La page \texttt{EtudiantCours} permet à l'étudiant de consulter les cours auxquels il est inscrit.
+
+\begin{itemize}[noitemsep]
+    \item \textbf{Liste des cours} avec : nom, enseignant, coefficient, volume horaire ;
+    \item \textbf{Détail du cours} : description complète, département, ressources disponibles ;
+    \item \textbf{Téléchargement des ressources} : accès aux fichiers pédagogiques déposés par l'enseignant.
+\end{itemize}
+
+\subsection{Devoirs et soumissions}
+
+Deux pages sont dédiées à la gestion des devoirs :
+
+\vspace{0.3cm}
+
+\textbf{Page « Devoirs » (\texttt{EtudiantDevoirs})} :
+\begin{itemize}[noitemsep]
+    \item \textbf{Liste des devoirs} associés aux cours de l'étudiant ;
+    \item \textbf{Informations affichées} : titre, cours, enseignant, date de début, date limite ;
+    \item \textbf{Indicateur visuel} : statut du devoir (actif / expiré / soumis).
+\end{itemize}
+
+\vspace{0.3cm}
+
+\textbf{Page « Soumissions » (\texttt{EtudiantSoumissions})} :
+\begin{itemize}[noitemsep]
+    \item \textbf{Formulaire de soumission} : contenu textuel et/ou upload de fichier ;
+    \item \textbf{Historique des soumissions} : liste de toutes les soumissions avec date, note (si évaluée) et feedback de l'enseignant ;
+    \item \textbf{Statut} : « En attente d'évaluation » ou « Évaluée » avec note et commentaire.
+\end{itemize}
+
+\subsection{Consultation des notes}
+
+La page \texttt{EtudiantNotes} offre une vue complète des résultats académiques.
+
+\begin{itemize}[noitemsep]
+    \item \textbf{Tableau des notes} : matière, valeur, observation, date ;
+    \item \textbf{Calcul automatique de la moyenne} générale via l'endpoint \texttt{/api/notes/etudiant/\{id\}/moyenne} ;
+    \item \textbf{Code couleur} : mise en avant des notes au-dessus et en dessous de la moyenne ;
+    \item \textbf{Possibilité de réclamer} une note directement depuis cette page.
+\end{itemize}
+
+\subsection{Demandes administratives}
+
+La page \texttt{EtudiantDemandes} permet de soumettre et suivre les demandes administratives.
+
+\begin{itemize}[noitemsep]
+    \item \textbf{Formulaire de demande} : type (Attestation, Stage, Autre), description, indicateur d'urgence ;
+    \item \textbf{Historique} : liste de toutes les demandes avec leur statut actuel (En attente, Acceptée, Refusée) ;
+    \item \textbf{Suivi en temps réel} du traitement de chaque demande.
+\end{itemize}
+
+\subsection{Demandes de stage}
+
+La page \texttt{EtudiantDemandesStage} est spécifiquement dédiée aux demandes de stage.
+
+\begin{itemize}[noitemsep]
+    \item \textbf{Formulaire spécialisé} : description du stage, entreprise d'accueil, responsable de stage, indicateur d'urgence ;
+    \item \textbf{Statuts possibles} : En attente, Acceptée, Refusée, Complétée ;
+    \item \textbf{Historique} des demandes de stage avec suivi.
+\end{itemize}
+
+\subsection{Consultation des absences}
+
+La page \texttt{EtudiantAbsences} permet de consulter l'historique des absences.
+
+\begin{itemize}[noitemsep]
+    \item \textbf{Liste des absences} : cours, date, statut (Justifiée, Non justifiée, En attente) ;
+    \item \textbf{Soumission de justification} : formulaire avec motif et upload de document justificatif ;
+    \item \textbf{Suivi du traitement} : statut de la justification (En attente, Consultée, Acceptée, Refusée).
+\end{itemize}
+
+\subsection{Réclamations}
+
+La page \texttt{EtudiantReclamations} permet de déposer différents types de réclamations.
+
+\begin{itemize}[noitemsep]
+    \item \textbf{Réclamation générale} : motif, type, description, indicateur d'urgence ;
+    \item \textbf{Réclamation de note} : sélection de la note concernée, motif détaillé — cette réclamation suit un workflow spécifique (Étudiant → Admin → Enseignant) ;
+    \item \textbf{Historique} des réclamations avec leur statut de traitement.
+\end{itemize}
+
+\subsection{Emploi du temps}
+
+La page \texttt{EtudiantEmploiDuTemps} affiche l'emploi du temps de l'étudiant.
+
+\begin{itemize}[noitemsep]
+    \item \textbf{Vue hebdomadaire} organisée par jour ;
+    \item \textbf{Créneaux affichés} : cours, horaire, salle ;
+    \item \textbf{Filtrage automatique} selon les cours auxquels l'étudiant est inscrit.
+\end{itemize}
+
+\subsection{Notifications}
+
+La page \texttt{EtudiantNotifications} centralise toutes les notifications reçues.
+
+\begin{itemize}[noitemsep]
+    \item \textbf{Liste des notifications} : titre, message, type, date, pièce jointe éventuelle ;
+    \item \textbf{Types de notifications} reçues :
+    \begin{itemize}[noitemsep]
+        \item \texttt{DEVOIR\_UPLOAD} : nouveau devoir déposé ;
+        \item \texttt{DEADLINE\_PROCHE} : rappel automatique 48h avant la date limite (généré par le \textit{scheduler} côté backend) ;
+        \item \texttt{ETUDIANT\_ABSENT} : notification d'absence marquée ;
+        \item \texttt{ANNONCE} : annonce générale de l'administration ou d'un enseignant ;
+    \end{itemize}
+    \item \textbf{Marquer comme lu} : individuellement ou toutes en une fois ;
+    \item \textbf{Badge de compteur} : nombre de notifications non lues affiché dans la barre de navigation.
+\end{itemize}
+
+%%======================================================================
+\section{API REST Backend}
+
+\subsection{Description des endpoints principaux}
+
+L'API REST du backend expose plus de \textbf{90 endpoints} répartis sur \textbf{28 contrôleurs}. Tous les endpoints sont préfixés par \texttt{/api/}. Le tableau~\ref{tab:endpoints} résume les principales ressources :
+
+\begin{longtable}{llp{5.5cm}}
+\caption{Principaux endpoints de l'API REST} \label{tab:endpoints} \\
+\toprule
+\textbf{Ressource} & \textbf{URL de base} & \textbf{Opérations principales} \\
+\midrule
+\endfirsthead
+
+\toprule
+\textbf{Ressource} & \textbf{URL de base} & \textbf{Opérations principales} \\
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+
+Users & /api/users & CRUD, activation, changement de mot de passe \\
+Admins & /api/admins & CRUD, recherche par email \\
+Enseignants & /api/enseignants & CRUD, filtrage par département \\
+Étudiants & /api/etudiants & CRUD, filtrage par département \\
+Départements & /api/departements & CRUD, recherche par nom \\
+Groupes & /api/groupes & CRUD, recherche \\
+Cours & /api/cours & CRUD, upload de ressources, filtrage \\
+Matières & /api/matieres & CRUD \\
+Notes & /api/notes & CRUD, vue admin, calcul de moyenne \\
+Devoirs & /api/devoirs & CRUD, filtrage par cours/enseignant \\
+Soumissions & /api/soumissions & Soumission (texte/fichier), évaluation, filtrage \\
+Absences & /api/absences & CRUD, filtrage par étudiant/cours \\
+Justifications & /api/justifications & Création (avec fichier), consultation, traitement \\
+Emploi du temps & /api/emploi-du-temps & CRUD, filtrage par cours \\
+Demandes & /api/demandes & CRUD, filtrage par étudiant/admin \\
+Demandes stage & /api/demandes-stage & CRUD, filtrage urgence/pending \\
+Réclamations & /api/reclamations & CRUD, filtrage urgence/pending \\
+Récl. Notes & /api/reclamation-notes & Workflow multi-étapes (étudiant→admin→prof) \\
+Notifications & /api/notifications & Envoi, broadcast, approbation, lecture \\
+Dashboard & /api/dashboard & Graphiques (notes, soumissions, absences) \\
+Actions & /api/actions & Actions rapides enseignant (devoir, absence…) \\
+Fichiers & /api/files & Téléchargement de fichiers \\
+\end{longtable}
+
+\subsection{Format de réponse (ApiResponse)}
+
+Toutes les réponses de l'API suivent un format JSON uniforme défini par la classe \texttt{ApiResponse} :
+
+\begin{lstlisting}[language=Java,caption={Structure de la réponse API (ApiResponse.java)}]
+public class ApiResponse {
+    private boolean success;     // true ou false
+    private String message;      // Message descriptif
+    private Object data;         // Données retournées
+    private LocalDateTime timestamp; // Horodatage
+}
+\end{lstlisting}
+
+\textbf{Exemple de réponse réussie :}
+\begin{lstlisting}[caption={Exemple de réponse JSON}]
+{
+  "success": true,
+  "message": "Cours récupéré avec succès",
+  "data": {
+    "id": 1,
+    "nomCours": "Programmation Java",
+    "coefficient": 3,
+    "volumeHoraire": 42
+  },
+  "timestamp": "2026-02-18T10:30:00"
+}
+\end{lstlisting}
+
+\subsection{Gestion des erreurs (GlobalExceptionHandler)}
+
+Un gestionnaire d'exceptions global, implémenté via \texttt{@RestControllerAdvice}, intercepte toutes les erreurs et retourne des messages en français compréhensibles :
+
+\begin{table}[H]
+\centering
+\caption{Gestion des erreurs backend}
+\label{tab:errors}
+\begin{tabularx}{\textwidth}{lX}
+\toprule
+\textbf{Exception} & \textbf{Message retourné} \\
+\midrule
+\texttt{DataIntegrityViolation} & « Un utilisateur avec cet email existe déjà » / « Ce numéro de téléphone est déjà utilisé » \\
+\texttt{HttpMessageNotReadable} & « Format de requête invalide » \\
+\texttt{RuntimeException} & Message spécifique de l'erreur \\
+\texttt{Exception} (générique) & « Erreur interne du serveur » \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+%%======================================================================
+%% Layout et fonctionnalités transversales
+%%======================================================================
+\section*{Fonctionnalités transversales}
+\addcontentsline{toc}{section}{Fonctionnalités transversales}
+
+Au-delà des pages spécifiques à chaque rôle, la plateforme intègre plusieurs fonctionnalités transversales :
+
+\begin{itemize}
+    \item \textbf{Layout Dashboard} : barre latérale repliable avec navigation groupée par catégorie, recherche rapide, icônes contextuelles et thème couleur adapté au rôle (bleu pour admin, vert pour enseignant, orange pour étudiant) ;
+    
+    \item \textbf{Mode sombre} : bascule entre thème clair et sombre, persisté dans le \texttt{localStorage} ;
+    
+    \item \textbf{Palette de commandes} (\texttt{Ctrl+K}) : recherche rapide de pages et navigation instantanée via la bibliothèque \texttt{cmdk} ;
+    
+    \item \textbf{Notifications en temps réel} : cloche de notification dans la barre supérieure avec badge de compteur et menu déroulant des dernières notifications ;
+    
+    \item \textbf{Page Profil} : consultation et modification des informations personnelles de l'utilisateur connecté ;
+    
+    \item \textbf{Page ResourcePage générique} : composant CRUD réutilisable piloté par configuration, utilisé pour générer rapidement des pages d'administration (CRUD complet sur n'importe quelle entité) ;
+    
+    \item \textbf{Responsive design} : toutes les pages s'adaptent aux écrans mobiles, tablettes et desktop grâce à Tailwind CSS ;
+    
+    \item \textbf{Upload de fichiers} : système centralisé de stockage de fichiers (\texttt{FileStorageService}) avec nommage UUID, stockage dans \texttt{./uploads/\{catégorie\}/} et service de téléchargement ;
+    
+    \item \textbf{Tâche planifiée (Scheduler)} : \texttt{DeadlineNotificationScheduler} vérifie toutes les heures les devoirs dont la date limite approche (48h) et envoie automatiquement des notifications de rappel aux étudiants concernés ;
+    
+    \item \textbf{Initialisation des données} : le \texttt{DataInitializer} peuple la base avec des données de démonstration au démarrage (idempotent).
+\end{itemize}
+
+%%======================================================================
+\section*{Répartition des tâches -- Volet Réalisation}
+\addcontentsline{toc}{section}{Répartition des tâches -- Volet Réalisation}
+
+Dans cette version du rapport, les tâches sont orientées \textbf{implémentation}, \textbf{intégration} et \textbf{validation} de la solution.
+
+\begin{table}[H]
+\centering
+\caption{Division des tâches de réalisation}
+\label{tab:taches_realisation}
+\begin{tabularx}{\textwidth}{lX}
+\toprule
+\textbf{Axe} & \textbf{Tâches réalisées} \\
+\midrule
+Backend Spring Boot & Implémentation des entités JPA, repositories, services métier, contrôleurs REST et gestion globale des exceptions. \\
+Frontend React/TypeScript & Développement des interfaces par rôle (Admin, Enseignant, Étudiant), routage protégé, gestion des états et consommation des APIs. \\
+Fonctionnalités métier & Réalisation des workflows complets : soumissions de devoirs, absences/justifications, demandes administratives, réclamations et notifications. \\
+Fichiers et ressources & Intégration de l'upload/download (cours, soumissions, justifications, notifications) avec stockage structuré côté serveur. \\
+Qualité et UX & Mise en place du mode sombre, responsive design, navigation rapide (palette de commandes), tableaux de bord et visualisations statistiques. \\
+Tests et validation & Vérification des endpoints principaux, contrôle de cohérence des parcours utilisateurs et validation fonctionnelle de bout en bout. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\newpage

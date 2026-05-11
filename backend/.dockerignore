@@ -1,0 +1,17 @@
+# .dockerignore for Backend
+target/
+.git
+.gitignore
+.github
+.mvn
+.idea
+.vscode
+*.iml
+*.log
+*.swp
+*.swo
+*~
+.DS_Store
+node_modules
+README.md
+docs

@@ -1,0 +1,17 @@
+# .dockerignore for Frontend
+node_modules
+.git
+.gitignore
+.github
+.idea
+.vscode
+.env.local
+dist
+build
+*.log
+*.swp
+*.swo
+*~
+.DS_Store
+README.md
+docs

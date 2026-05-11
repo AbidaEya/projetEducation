@@ -1,0 +1,16 @@
+=== Ressources Bases de Données ===
+
+Chapitre 1: Introduction aux SGBD
+- Concepts fondamentaux
+- Modèle relationnel
+
+Chapitre 2: SQL
+- SELECT, INSERT, UPDATE, DELETE
+- JOINs
+- Sous-requêtes
+
+Chapitre 3: Conception
+- Normalisation
+- Diagrammes ER
+
+TP: Création d'une base de données complète

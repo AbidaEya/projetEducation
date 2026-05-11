@@ -1,0 +1,10 @@
+{
+    "properties": [
+        {
+            "name": "app.upload.dir",
+            "type": "java.lang.String",
+            "description": "Filesystem directory used to store uploaded files. Exposed under /uploads/** via StaticResourceConfig.",
+            "defaultValue": "./uploads"
+        }
+    ]
+}

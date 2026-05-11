@@ -1,0 +1,81 @@
+%%======================================================================
+%%  Chapitre 4 : Réalisation du projet — Rapport 1 (Lot A)
+%%======================================================================
+\chapter{Réalisation du projet — Rapport 1 (Lot A)}
+
+Ce chapitre présente la \textbf{Réalisation Lot A} du même projet \textit{EduPlatform}. Le périmètre couvre principalement le \textbf{backend}, les \textbf{processus administratifs} et l'\textbf{intégration API}.
+
+%%======================================================================
+\section{Périmètre du Lot A}
+
+Le Lot A regroupe les tâches techniques suivantes :
+\begin{itemize}[noitemsep]
+    \item implémentation de la couche backend (entités, repositories, services, contrôleurs) ;
+    \item gestion des espaces \textbf{administrateur} et workflows métiers critiques ;
+    \item centralisation des erreurs, format de réponse API et fiabilisation des endpoints ;
+    \item intégration des services fichiers et des règles de validation côté serveur.
+\end{itemize}
+
+%%======================================================================
+\section{Implémentation backend Spring Boot}
+
+\subsection{Architecture technique mise en œuvre}
+
+Le backend a été structuré selon un découpage en couches :
+\begin{itemize}[noitemsep]
+    \item \textbf{Model} : entités JPA représentant les objets métiers ;
+    \item \textbf{Repository} : accès aux données via Spring Data JPA ;
+    \item \textbf{Service} : logique métier et orchestration des traitements ;
+    \item \textbf{Controller} : exposition des endpoints REST consommés par le frontend.
+\end{itemize}
+
+\subsection{Stabilisation API}
+
+Les réponses JSON suivent le modèle \texttt{ApiResponse} pour standardiser les retours succès/erreur. Un \texttt{GlobalExceptionHandler} assure une gestion homogène des erreurs techniques et fonctionnelles.
+
+%%======================================================================
+\section{Réalisation des modules administratifs}
+
+Le Lot A couvre l'essentiel des modules orientés administration :
+\begin{itemize}[noitemsep]
+    \item \textbf{AdminDemandes} et \textbf{AdminDemandesStage} : traitement des demandes ;
+    \item \textbf{AdminAbsences} et \textbf{AdminJustifications} : suivi et validation ;
+    \item \textbf{AdminSoumissions} et \textbf{AdminNotes} : supervision académique ;
+    \item \textbf{AdminReclamations} : gestion du workflow de réclamation ;
+    \item \textbf{AdminNotifications} : diffusion et approbation des notifications.
+\end{itemize}
+
+%%======================================================================
+\section{Intégration fichiers et persistance}
+
+Les traitements d'upload/download ont été intégrés côté backend pour :
+\begin{itemize}[noitemsep]
+    \item ressources pédagogiques ;
+    \item soumissions de devoirs ;
+    \item pièces justificatives d'absences ;
+    \item fichiers attachés aux notifications.
+\end{itemize}
+
+Le service de stockage applique un nommage unique (UUID) et une organisation par catégories pour garantir la traçabilité des documents.
+
+%%======================================================================
+\section{Répartition des tâches — Rapport 1}
+
+\begin{table}[H]
+\centering
+\caption{Division des tâches de réalisation — Lot A}
+\label{tab:taches_realisation_lot_a}
+\begin{tabularx}{\textwidth}{lX}
+\toprule
+\textbf{Axe} & \textbf{Tâches prises en charge} \\
+\midrule
+Backend & Entités JPA, repositories, services, contrôleurs REST, validation des données. \\
+Administration & Développement des modules admin : demandes, absences, justifications, réclamations, notifications. \\
+API & Uniformisation des réponses via \texttt{ApiResponse} et gestion globale des exceptions. \\
+Persistance/Fichiers & Upload/download, structuration du stockage, liaison avec les workflows métiers. \\
+Qualité technique & Vérification des endpoints critiques et cohérence des statuts métier. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\newpage

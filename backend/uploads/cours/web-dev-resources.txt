@@ -1,0 +1,18 @@
+=== Ressources Développement Web ===
+
+Chapitre 1: HTML Basics
+- Structure d'une page HTML
+- Balises principales
+- Formulaires
+
+Chapitre 2: CSS Styling
+- Sélecteurs
+- Box Model
+- Flexbox & Grid
+
+Chapitre 3: JavaScript
+- Variables et fonctions
+- DOM Manipulation
+- Events
+
+Projet: Créer un site web responsive

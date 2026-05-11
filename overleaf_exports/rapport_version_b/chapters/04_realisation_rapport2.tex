@@ -1,0 +1,87 @@
+%%======================================================================
+%%  Chapitre 4 : Réalisation du projet — Rapport 2 (Lot B)
+%%======================================================================
+\chapter{Réalisation du projet — Rapport 2 (Lot B)}
+
+Ce chapitre présente la \textbf{Réalisation Lot B} du même projet \textit{EduPlatform}. Le périmètre couvre principalement le \textbf{frontend}, l'\textbf{expérience utilisateur} et les \textbf{parcours Enseignant/Étudiant}.
+
+%%======================================================================
+\section{Périmètre du Lot B}
+
+Le Lot B regroupe les tâches suivantes :
+\begin{itemize}[noitemsep]
+    \item réalisation des interfaces web React/TypeScript ;
+    \item implémentation des espaces \textbf{enseignant} et \textbf{étudiant} ;
+    \item amélioration UX (responsive, mode sombre, navigation rapide) ;
+    \item intégration côté client des endpoints backend et validation des parcours utilisateurs.
+\end{itemize}
+
+%%======================================================================
+\section{Interfaces communes et authentification}
+
+La couche frontend a été conçue pour proposer une expérience cohérente :
+\begin{itemize}[noitemsep]
+    \item \textbf{Landing Page} informative avec sections dynamiques ;
+    \item \textbf{Login multi-rôle} (Admin, Enseignant, Étudiant) ;
+    \item routage protégé et redirection vers les dashboards par rôle ;
+    \item persistance de session et préférences utilisateur.
+\end{itemize}
+
+%%======================================================================
+\section{Réalisation de l'espace Enseignant}
+
+Les fonctionnalités réalisées pour l'enseignant incluent :
+\begin{itemize}[noitemsep]
+    \item dashboard de suivi pédagogique ;
+    \item gestion des cours et des ressources ;
+    \item planification des évaluations ;
+    \item consultation de l'emploi du temps ;
+    \item traitement des réclamations de notes ;
+    \item émission de notifications soumises à approbation.
+\end{itemize}
+
+%%======================================================================
+\section{Réalisation de l'espace Étudiant}
+
+Les fonctionnalités majeures réalisées côté étudiant :
+\begin{itemize}[noitemsep]
+    \item consultation des cours et téléchargement des ressources ;
+    \item gestion des devoirs et soumissions ;
+    \item consultation des notes et moyenne ;
+    \item suivi des absences et dépôt de justifications ;
+    \item demandes administratives et demandes de stage ;
+    \item réclamations et notifications.
+\end{itemize}
+
+%%======================================================================
+\section{Qualité UX et validation fonctionnelle}
+
+Le Lot B a également couvert :
+\begin{itemize}[noitemsep]
+    \item responsive design (mobile/tablette/desktop) ;
+    \item mode sombre avec persistance ;
+    \item navigation rapide (palette de commandes) ;
+    \item vérification de bout en bout des scénarios utilisateur principaux.
+\end{itemize}
+
+%%======================================================================
+\section{Répartition des tâches — Rapport 2}
+
+\begin{table}[H]
+\centering
+\caption{Division des tâches de réalisation — Lot B}
+\label{tab:taches_realisation_lot_b}
+\begin{tabularx}{\textwidth}{lX}
+\toprule
+\textbf{Axe} & \textbf{Tâches prises en charge} \\
+\midrule
+Frontend & Développement des composants React, pages par rôle et intégration API côté client. \\
+Parcours Enseignant & Cours, évaluations, emploi du temps, réclamations de notes, notifications. \\
+Parcours Étudiant & Devoirs/soumissions, notes, absences/justifications, demandes et réclamations. \\
+UX/UI & Responsive design, mode sombre, ergonomie de navigation et feedback utilisateur. \\
+Validation fonctionnelle & Vérification des parcours métier côté interface et cohérence des interactions client-serveur. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\newpage

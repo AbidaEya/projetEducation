@@ -1,0 +1,79 @@
+[ {
+  "id" : 4,
+  "email" : "etudiant1@education.com",
+  "password" : "pass123",
+  "firstName" : "Pierre",
+  "lastName" : "Bernard",
+  "phoneNumber" : "+33612345681",
+  "address" : "321 Rue des Étudiants",
+  "isActive" : true,
+  "createdAt" : "2026-01-28T13:04:10.309426",
+  "updatedAt" : "2026-01-28T13:04:10.309426",
+  "niveau" : "L3",
+  "groupe" : {
+    "id" : 1,
+    "nomGroupe" : "Groupe A",
+    "niveau" : 3,
+    "createdAt" : "2026-01-28T13:04:10.28087",
+    "updatedAt" : "2026-01-28T13:04:10.28087"
+  },
+  "departement" : {
+    "id" : 1,
+    "nomDepartement" : "Informatique",
+    "description" : "Département d'Informatique et de Technologie",
+    "createdAt" : "2026-01-28T13:04:10.239707",
+    "updatedAt" : "2026-01-28T13:04:10.239707"
+  }
+}, {
+  "id" : 5,
+  "email" : "etudiant2@education.com",
+  "password" : "pass123",
+  "firstName" : "Sophie",
+  "lastName" : "Lefevre",
+  "phoneNumber" : "+33612345682",
+  "address" : "654 Avenue des Talents",
+  "isActive" : true,
+  "createdAt" : "2026-01-28T13:04:10.31019",
+  "updatedAt" : "2026-01-28T13:04:10.31019",
+  "niveau" : "L3",
+  "groupe" : {
+    "id" : 2,
+    "nomGroupe" : "Groupe B",
+    "niveau" : 3,
+    "createdAt" : "2026-01-28T13:04:10.289757",
+    "updatedAt" : "2026-01-28T13:04:10.289757"
+  },
+  "departement" : {
+    "id" : 1,
+    "nomDepartement" : "Informatique",
+    "description" : "Département d'Informatique et de Technologie",
+    "createdAt" : "2026-01-28T13:04:10.239707",
+    "updatedAt" : "2026-01-28T13:04:10.239707"
+  }
+}, {
+  "id" : 6,
+  "email" : "etudiant3@education.com",
+  "password" : "pass123",
+  "firstName" : "Luc",
+  "lastName" : "Morin",
+  "phoneNumber" : "+33612345683",
+  "address" : "987 Boulevard des Savoirs",
+  "isActive" : true,
+  "createdAt" : "2026-01-28T13:04:10.31019",
+  "updatedAt" : "2026-01-28T13:04:10.31019",
+  "niveau" : "L2",
+  "groupe" : {
+    "id" : 3,
+    "nomGroupe" : "Groupe C",
+    "niveau" : 2,
+    "createdAt" : "2026-01-28T13:04:10.294808",
+    "updatedAt" : "2026-01-28T13:04:10.294808"
+  },
+  "departement" : {
+    "id" : 1,
+    "nomDepartement" : "Informatique",
+    "description" : "Département d'Informatique et de Technologie",
+    "createdAt" : "2026-01-28T13:04:10.239707",
+    "updatedAt" : "2026-01-28T13:04:10.239707"
+  }
+} ]

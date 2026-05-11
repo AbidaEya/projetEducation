@@ -1,0 +1,35 @@
+\chapter{Etude préalable}
+
+\section{Description de l'existant}
+L'analyse initiale a montré une gestion fragmentée des données pédagogiques et administratives. Les informations relatives aux absences, demandes, réclamations et notifications n'étaient pas centralisées dans une même architecture de services.
+
+L'existant présentait également un manque de standardisation dans l'exposition des fonctionnalités côté API.
+
+\section{Critiques de l'existant}
+Les limites observées sont les suivantes :
+\begin{itemize}
+	\item redondance des informations entre plusieurs modules ;
+	\item lenteur dans le traitement des opérations administratives ;
+	\item difficulté de traçabilité des actions ;
+	\item intégration frontend/backend moins fluide en l'absence de contrats API homogènes.
+\end{itemize}
+
+\section{Solutions proposées}
+Pour répondre à ces insuffisances, la solution proposée repose sur :
+\begin{itemize}
+	\item une architecture en couches \textit{Controller/Service/Repository} ;
+	\item un modèle de données unifié basé sur des entités JPA ;
+	\item des endpoints REST standardisés ;
+	\item une gestion globale des erreurs via un gestionnaire d'exceptions centralisé.
+\end{itemize}
+
+\section{Développement de la solution finale}
+La solution finale backend intègre les modules critiques suivants :
+\begin{itemize}
+	\item gestion des utilisateurs (admin, enseignant, étudiant) ;
+	\item gestion des départements, cours et structures pédagogiques ;
+	\item suivi des absences et demandes ;
+	\item traitement des réclamations ;
+	\item système de notifications ;
+	\item services de persistance et de gestion des pièces jointes.
+\end{itemize}

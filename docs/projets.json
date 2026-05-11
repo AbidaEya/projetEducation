@@ -1,0 +1,31 @@
+[ {
+  "id" : 1,
+  "titre" : "Plateforme e-learning",
+  "description" : "Développer une plateforme de e-learning complète",
+  "dateDebut" : "2026-01-28T12:35:24.349604",
+  "dateFin" : "2026-03-28T12:35:24.349604",
+  "enseignant" : {
+    "id" : 2,
+    "email" : "enseignant1@education.com",
+    "password" : "pass123",
+    "firstName" : "Jean",
+    "lastName" : "Dupont",
+    "phoneNumber" : "+33612345679",
+    "address" : "456 Avenue de l'École",
+    "isActive" : true,
+    "createdAt" : "2026-01-28T12:35:24.316444",
+    "updatedAt" : "2026-01-28T12:35:24.316444",
+    "notifications" : [ ],
+    "specialite" : "Développement Web",
+    "departement" : {
+      "id" : 1,
+      "nomDepartement" : "Informatique",
+      "description" : "Département d'Informatique et de Technologie",
+      "createdAt" : "2026-01-28T12:35:24.22051",
+      "updatedAt" : "2026-01-28T12:35:24.22051"
+    }
+  },
+  "etudiants" : [ ],
+  "createdAt" : "2026-01-28T12:35:24.349604",
+  "updatedAt" : "2026-01-28T12:35:24.349604"
+} ]

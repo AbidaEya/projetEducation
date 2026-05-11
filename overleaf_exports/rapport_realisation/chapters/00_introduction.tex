@@ -1,0 +1,42 @@
+%%======================================================================
+%%  Introduction générale
+%%======================================================================
+\chapter*{Introduction générale}
+\addcontentsline{toc}{chapter}{Introduction générale}
+
+Dans un contexte de transformation numérique accélérée, le secteur de l'éducation fait face à des défis croissants en matière de gestion administrative et pédagogique. La multiplicité des acteurs (administrateurs, enseignants, étudiants), la diversité des processus (gestion des cours, suivi des absences, évaluation des devoirs, traitement des demandes administratives) et le volume grandissant des données nécessitent des solutions informatiques robustes et modernes.
+
+\vspace{0.5cm}
+
+C'est dans ce cadre que s'inscrit notre projet de stage : la conception et le développement d'une \textbf{plateforme éducative web complète}, baptisée \textit{EduPlatform}. Cette plateforme vise à centraliser et automatiser l'ensemble des processus de gestion d'un établissement d'enseignement supérieur, en offrant à chaque type d'utilisateur un espace dédié et adapté à ses besoins.
+
+\vspace{0.5cm}
+
+Le projet repose sur une architecture moderne à trois niveaux (\textit{3-tiers}) :
+\begin{itemize}[noitemsep]
+    \item Un \textbf{backend} développé avec \tech{Spring Boot} (Java 17), exposant une API REST complète avec plus de 90 endpoints ;
+    \item Un \textbf{frontend} construit avec \tech{React} et \tech{TypeScript}, offrant une interface utilisateur réactive et ergonomique ;
+    \item Une \textbf{base de données} relationnelle (\tech{MySQL} en production, \tech{H2} en développement) gérée via l'ORM \tech{Hibernate/JPA}.
+\end{itemize}
+
+\vspace{0.5cm}
+
+La plateforme prend en charge trois rôles distincts :
+\begin{itemize}[noitemsep]
+    \item \textbf{L'Administrateur} : gestion globale du système, traitement des demandes, supervision des absences, gestion des notifications et des réclamations ;
+    \item \textbf{L'Enseignant} : gestion des cours, création de devoirs, évaluation des soumissions, suivi des absences et gestion de l'emploi du temps ;
+    \item \textbf{L'Étudiant} : consultation des cours, soumission des devoirs, consultation des notes, gestion des absences, dépôt de demandes administratives et réclamations.
+\end{itemize}
+
+\vspace{0.5cm}
+
+Ce rapport est structuré en quatre chapitres :
+
+\begin{description}
+    \item[Chapitre 1 :] \textit{Étude de l'organisme} — présentation de l'organisme d'accueil et du cadre du stage.
+    \item[Chapitre 2 :] \textit{Présentation de l'environnement de développement} — description détaillée des technologies, outils et frameworks utilisés.
+    \item[Chapitre 3 :] \textit{Conception du projet} — modélisation de l'architecture, diagrammes de classes, cas d'utilisation et diagrammes de séquence.
+    \item[Chapitre 4 :] \textit{Réalisation du projet} — présentation des interfaces réalisées et des fonctionnalités implémentées pour chaque espace utilisateur.
+\end{description}
+
+\newpage

@@ -1,0 +1,158 @@
+{
+  "info": {
+    "_postman_id": "education-platform-api",
+    "name": "Education Platform API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Register Student",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"newstudent@education.com\",\n  \"password\": \"password123\",\n  \"confirmPassword\": \"password123\",\n  \"firstName\": \"Marie\",\n  \"lastName\": \"Dupont\",\n  \"phoneNumber\": \"+33612345678\",\n  \"address\": \"123 Rue de Paris\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8081/api/users/register/etudiant",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "users", "register", "etudiant"]
+            }
+          }
+        },
+        {
+          "name": "Get All Users",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8081/api/users",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "users"]
+            }
+          }
+        },
+        {
+          "name": "Get All Enseignants",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8081/api/users/role/enseignants",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "users", "role", "enseignants"]
+            }
+          }
+        },
+        {
+          "name": "Get All Etudiants",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8081/api/users/role/etudiants",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "users", "role", "etudiants"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Classes",
+      "item": [
+        {
+          "name": "Create Class",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Classe Terminale S\",\n  \"description\": \"Classe scientifique\",\n  \"level\": 12,\n  \"enseignantId\": 2\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8081/api/classes",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "classes"]
+            }
+          }
+        },
+        {
+          "name": "Get All Classes",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8081/api/classes",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "classes"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cours",
+      "item": [
+        {
+          "name": "Create Cours",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Mathématiques Avancées\",\n  \"description\": \"Cours de mathématiques niveau terminale\",\n  \"content\": \"Contenu du cours...\",\n  \"classeId\": 1,\n  \"enseignantId\": 2,\n  \"ressourcePath\": \"/resources/maths.pdf\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8081/api/cours",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "cours"]
+            }
+          }
+        },
+        {
+          "name": "Get All Cours",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8081/api/cours",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "cours"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

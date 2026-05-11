@@ -1,0 +1,513 @@
+%%======================================================================
+%%  Chapitre 2 : Présentation de l'environnement de développement
+%%======================================================================
+\chapter{Présentation de l'environnement de développement}
+
+Ce chapitre présente les technologies, frameworks et outils utilisés pour le développement de la plateforme éducative \textit{EduPlatform}. Le projet adopte une architecture fullstack moderne séparant clairement le backend (API REST) du frontend (application web monopage).
+
+%%======================================================================
+\section{Spring Boot (Backend)}
+
+\subsection{Description}
+
+\textbf{Spring Boot} est un framework open source basé sur le framework Spring, développé par Pivotal (VMware). Il facilite la création d'applications Java autonomes, prêtes pour la production, en minimisant la configuration nécessaire grâce au principe de \textit{convention over configuration}.
+
+\vspace{0.3cm}
+
+Spring Boot intègre un serveur web embarqué (Tomcat) et fournit un écosystème riche de modules (\textit{starters}) pour la persistance des données, la validation, la sécurité et bien d'autres fonctionnalités.
+
+\vspace{0.3cm}
+
+\begin{table}[H]
+\centering
+\caption{Caractéristiques de Spring Boot utilisées dans le projet}
+\label{tab:springboot}
+\begin{tabularx}{\textwidth}{lX}
+\toprule
+\textbf{Caractéristique} & \textbf{Description} \\
+\midrule
+Version & 3.5.10 \\
+Langage & Java 17+ \\
+Serveur embarqué & Apache Tomcat \\
+Port & 8081 \\
+Build tool & Apache Maven \\
+Modules utilisés & Spring Web, Spring Data JPA, Spring Validation \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Installation (JDK 17+ et Maven)}
+
+Pour développer avec Spring Boot, les prérequis suivants doivent être installés :
+
+\begin{enumerate}[noitemsep]
+    \item \textbf{JDK 17 ou supérieur} : le kit de développement Java fournit le compilateur et la machine virtuelle Java ;
+    \item \textbf{Apache Maven 3.6+} : outil d'automatisation de build qui gère les dépendances et le cycle de vie du projet.
+\end{enumerate}
+
+\begin{lstlisting}[language=bash,caption={Vérification des installations}]
+# Vérifier la version de Java
+java --version
+# Résultat attendu : java 17.x.x ou supérieur
+
+# Vérifier la version de Maven
+mvn --version
+# Résultat attendu : Apache Maven 3.6.x ou supérieur
+\end{lstlisting}
+
+\subsection{Création du projet Spring Boot}
+
+Le projet a été initialisé avec la structure standard Maven. Le fichier \texttt{pom.xml} définit les dépendances principales :
+
+\begin{lstlisting}[language=XML,caption={Extrait du fichier pom.xml — Dépendances principales}]
+<parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>3.5.10</version>
+</parent>
+
+<dependencies>
+    <!-- Spring Boot Web (REST API + Tomcat) -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+
+    <!-- Spring Data JPA (ORM Hibernate) -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
+
+    <!-- Validation (Jakarta Bean Validation) -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-validation</artifactId>
+    </dependency>
+
+    <!-- MySQL Connector -->
+    <dependency>
+        <groupId>com.mysql</groupId>
+        <artifactId>mysql-connector-j</artifactId>
+        <version>8.0.33</version>
+    </dependency>
+
+    <!-- H2 Database (développement) -->
+    <dependency>
+        <groupId>com.h2database</groupId>
+        <artifactId>h2</artifactId>
+        <scope>runtime</scope>
+    </dependency>
+</dependencies>
+\end{lstlisting}
+
+\subsection{Structure du projet (MVC)}
+
+Le backend suit le pattern \textbf{MVC} (\textit{Model–View–Controller}) adapté aux API REST. La structure est organisée en couches distinctes :
+
+\begin{lstlisting}[caption={Arborescence du backend},basicstyle=\small\ttfamily]
+backend/src/main/java/com/education/app/
+|-- EducationApplication.java     (Point d'entree)
+|-- model/                        (25 entites JPA)
+|   |-- User.java                 (Classe de base)
+|   |-- Admin.java
+|   |-- Enseignant.java
+|   |-- Etudiant.java
+|   |-- Cours.java
+|   |-- Devoir.java
+|   |-- Soumission.java
+|   |-- Absence.java
+|   |-- Notification.java
+|   |-- ...
+|-- repository/                   (Interfaces JPA)
+|-- service/                      (Logique metier)
+|-- controller/                   (Endpoints REST)
+|-- dto/                          (Objets de transfert)
+|-- config/                       (Configuration)
+    |-- CorsConfig.java
+    |-- GlobalExceptionHandler.java
+    |-- DataInitializer.java
+    |-- StaticResourceConfig.java
+\end{lstlisting}
+
+Cette architecture respecte le principe de \textbf{séparation des préoccupations} (\textit{Separation of Concerns}) :
+\begin{itemize}[noitemsep]
+    \item \textbf{Model} : les entités JPA représentent les tables de la base de données ;
+    \item \textbf{Repository} : les interfaces Spring Data JPA fournissent l'accès aux données ;
+    \item \textbf{Service} : les classes de service encapsulent la logique métier ;
+    \item \textbf{Controller} : les contrôleurs REST exposent les endpoints HTTP.
+\end{itemize}
+
+\subsection{Configuration (application.properties)}
+
+Spring Boot utilise des fichiers de propriétés pour configurer l'application. Notre projet utilise un système de \textbf{profils} pour basculer entre les environnements :
+
+\begin{lstlisting}[caption={Fichier application.properties — Configuration principale}]
+# Profil actif par défaut
+spring.profiles.active=mysql
+
+# Port du serveur
+server.port=8081
+
+# JPA / Hibernate
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=false
+
+# Jackson (sérialisation JSON)
+spring.jackson.serialization.indent-output=true
+spring.jackson.default-property-inclusion=non_null
+
+# Upload de fichiers
+spring.servlet.multipart.max-file-size=20MB
+app.upload.dir=./uploads
+\end{lstlisting}
+
+\begin{lstlisting}[caption={Fichier application-mysql.properties — Profil MySQL}]
+spring.datasource.url=jdbc:mysql://localhost:3306/educationn
+    ?createDatabaseIfNotExist=true&useSSL=false
+spring.datasource.username=root
+spring.datasource.password=
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+\end{lstlisting}
+
+\subsection{Lancement du serveur}
+
+Le lancement du serveur backend se fait via Maven :
+
+\begin{lstlisting}[language=bash,caption={Commandes de build et de lancement}]
+# Compiler le projet
+cd backend
+mvn clean package -DskipTests
+
+# Lancer avec le profil MySQL (via XAMPP)
+mvn spring-boot:run -Dspring-boot.run.profiles=mysql
+
+# Ou lancer avec H2 (base embarquée pour le dev)
+mvn spring-boot:run -Dspring-boot.run.profiles=h2
+\end{lstlisting}
+
+L'application démarre sur le port \textbf{8081} et l'API REST est accessible à l'adresse : \texttt{http://localhost:8081/api/}.
+
+%%======================================================================
+\section{React avec TypeScript (Frontend)}
+
+\subsection{Description}
+
+\textbf{React} est une bibliothèque JavaScript open source, développée par Meta (Facebook), pour la construction d'interfaces utilisateur interactives. Elle repose sur le concept de \textbf{composants réutilisables} et un \textbf{DOM virtuel} qui optimise les mises à jour de l'interface.
+
+\vspace{0.3cm}
+
+\textbf{TypeScript} est un sur-ensemble typé de JavaScript, développé par Microsoft, qui ajoute le typage statique au langage. Il permet de détecter les erreurs à la compilation et améliore la maintenabilité du code.
+
+\begin{table}[H]
+\centering
+\caption{Stack technique du frontend}
+\label{tab:frontend_stack}
+\begin{tabularx}{\textwidth}{lX}
+\toprule
+\textbf{Technologie} & \textbf{Rôle} \\
+\midrule
+React 18+ & Bibliothèque UI (composants, hooks, état) \\
+TypeScript & Typage statique du code JavaScript \\
+Vite & Outil de build ultrarapide (bundler) \\
+React Router v7 & Navigation SPA (Single Page Application) \\
+TailwindCSS v4 & Framework CSS utilitaire \\
+Radix UI & Composants accessibles (Dialog, Select, Tabs…) \\
+Material UI (MUI) & Composants additionnels (icônes, etc.) \\
+Framer Motion & Animations et transitions \\
+Lucide React & Bibliothèque d'icônes SVG \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Installation (Node.js et npm)}
+
+Le développement frontend nécessite :
+
+\begin{enumerate}[noitemsep]
+    \item \textbf{Node.js} (v18 ou supérieur) : environnement d'exécution JavaScript côté serveur, utilisé ici pour les outils de build ;
+    \item \textbf{npm} (Node Package Manager) : gestionnaire de paquets inclus avec Node.js.
+\end{enumerate}
+
+\begin{lstlisting}[language=bash,caption={Vérification et installation des dépendances frontend}]
+# Vérifier Node.js et npm
+node --version    # v18.x.x ou supérieur
+npm --version     # v9.x.x ou supérieur
+
+# Installer les dépendances du projet
+cd front2
+npm install
+\end{lstlisting}
+
+\subsection{Création du projet avec Vite}
+
+\textbf{Vite} est un outil de build nouvelle génération qui offre un démarrage quasi instantané grâce au \textit{Hot Module Replacement} (HMR) natif et à l'utilisation d'ESBuild pour la compilation.
+
+\begin{lstlisting}[language=bash,caption={Initialisation d'un projet React + TypeScript avec Vite}]
+npm create vite@latest front2 -- --template react-ts
+\end{lstlisting}
+
+Le fichier \texttt{vite.config.ts} configure le proxy vers le backend :
+
+\begin{lstlisting}[language=JavaScript,caption={Configuration Vite — Proxy vers le backend}]
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
+  server: {
+    port: 5174,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8081',
+        changeOrigin: true,
+      },
+      '/uploads': {
+        target: 'http://localhost:8081',
+        changeOrigin: true,
+      },
+    },
+  },
+});
+\end{lstlisting}
+
+\subsection{Structure du projet frontend}
+
+\begin{lstlisting}[caption={Arborescence du frontend (front2/)},basicstyle=\small\ttfamily]
+front2/src/
+|-- main.tsx                       (Point d'entree React)
+|-- app/
+|   |-- App.tsx                    (Composant racine)
+|   |-- routes.tsx                 (Configuration des routes)
+|   |-- contexts/
+|   |   |-- AuthContext.tsx         (Authentification)
+|   |-- layouts/
+|   |   |-- DashboardLayout.tsx     (Layout principal)
+|   |-- pages/
+|   |   |-- LandingPage.tsx        (Page d'accueil)
+|   |   |-- LoginPage.tsx          (Page de connexion)
+|   |   |-- ProfilePage.tsx        (Profil utilisateur)
+|   |   |-- admin/                 (9 pages admin)
+|   |   |-- enseignant/            (6 pages enseignant)
+|   |   |-- etudiant/              (11 pages etudiant)
+|   |-- services/
+|   |   |-- api.ts                 (Client HTTP centralise)
+|   |-- components/                (Composants reutilisables)
+|-- styles/
+    |-- index.css
+    |-- tailwind.css
+    |-- theme.css
+\end{lstlisting}
+
+\subsection{Lancement du serveur de développement}
+
+\begin{lstlisting}[language=bash,caption={Démarrage du frontend}]
+cd front2
+npm run dev
+# Le serveur démarre sur http://localhost:5174
+\end{lstlisting}
+
+Grâce au proxy Vite, toutes les requêtes \texttt{/api/*} sont automatiquement redirigées vers le backend Spring Boot sur le port 8081.
+
+%%======================================================================
+\section{Outils et bibliothèques complémentaires}
+
+\subsection{Tailwind CSS (Stylisation)}
+
+\textbf{Tailwind CSS} est un framework CSS utilitaire (\textit{utility-first}) qui permet de styliser les composants directement dans le JSX à l'aide de classes prédéfinies. Contrairement aux frameworks CSS traditionnels (Bootstrap, etc.), Tailwind ne fournit pas de composants prêts à l'emploi, mais des briques de style atomiques.
+
+\begin{lstlisting}[language=HTML,caption={Exemple d'utilisation de Tailwind CSS}]
+<div className="flex items-center gap-4 p-6
+     bg-white rounded-xl shadow-md
+     dark:bg-gray-800 dark:text-white">
+  <h2 className="text-2xl font-bold text-blue-600">
+    Tableau de bord
+  </h2>
+</div>
+\end{lstlisting}
+
+Avantages dans notre projet :
+\begin{itemize}[noitemsep]
+    \item Support natif du \textbf{mode sombre} (\texttt{dark:}) ;
+    \item \textbf{Design réactif} avec les préfixes responsifs (\texttt{sm:}, \texttt{md:}, \texttt{lg:}) ;
+    \item \textbf{Taille de bundle optimisée} grâce au \textit{tree-shaking} automatique.
+\end{itemize}
+
+\subsection{Radix UI et Material UI (Composants UI)}
+
+Notre projet utilise deux bibliothèques de composants complémentaires :
+
+\begin{itemize}
+    \item \textbf{Radix UI} : composants accessibles et non stylisés (\textit{headless}), utilisés comme base pour nos composants personnalisés (Dialog, Select, Tabs, Dropdown, Tooltip, etc.) ;
+    \item \textbf{Material UI (MUI)} : utilisé principalement pour les icônes (\texttt{@mui/icons-material}) et quelques composants spécifiques.
+\end{itemize}
+
+L'approche \textit{shadcn/ui} adoptée permet de combiner Radix UI avec Tailwind CSS pour obtenir des composants entièrement personnalisables.
+
+\subsection{React Router (Navigation)}
+
+\textbf{React Router v7} gère la navigation dans notre application monopage (SPA). Il permet de définir des routes protégées par rôle et des layouts imbriqués.
+
+\begin{lstlisting}[language=JavaScript,caption={Extrait de la configuration des routes}]
+const router = createBrowserRouter([
+  { path: '/', element: <LandingPage /> },
+  { path: '/login', element: <LoginPage /> },
+  {
+    path: '/dashboard',
+    element: <ProtectedRoute><DashboardLayout /></ProtectedRoute>,
+    children: [
+      { path: 'admin', element: <AdminDashboard /> },
+      { path: 'enseignant', element: <EnseignantDashboard /> },
+      { path: 'etudiant', element: <EtudiantDashboard /> },
+      { path: 'profile', element: <ProfilePage /> },
+      // ... 30+ routes spécialisées par rôle
+    ],
+  },
+]);
+\end{lstlisting}
+
+\subsection{Axios / Fetch API (Communication HTTP)}
+
+La communication entre le frontend et le backend se fait via un \textbf{client HTTP centralisé} utilisant l'API \texttt{fetch()} native du navigateur. Ce client est défini dans le fichier \texttt{api.ts} et fournit des fonctions typées :
+
+\begin{lstlisting}[language=JavaScript,caption={Service API centralisé (extrait de api.ts)}]
+const BASE = '/api';
+
+export async function apiGet<T>(url: string): Promise<T> {
+  const res = await fetch(`${BASE}${url}`);
+  if (!res.ok) throw new ApiError(res.status, msg);
+  return res.json();
+}
+
+export async function apiPost<T>(url: string, body: any){
+  const res = await fetch(`${BASE}${url}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+  // ...
+}
+
+// Également : apiPut, apiDelete, apiPostForm (FormData)
+\end{lstlisting}
+
+%%======================================================================
+\section{Base de données}
+
+\subsection{H2 Database (Développement)}
+
+\textbf{H2} est une base de données relationnelle légère écrite en Java. Dans notre projet, elle est utilisée en mode \textbf{fichier persistant} pour le développement local, ce qui permet de travailler sans installation de serveur de base de données externe.
+
+\begin{lstlisting}[caption={Configuration H2 (application-h2.properties)}]
+spring.datasource.url=jdbc:h2:file:./data/education_db
+spring.datasource.driver-class-name=org.h2.Driver
+spring.h2.console.enabled=true
+spring.h2.console.path=/h2-console
+\end{lstlisting}
+
+La console H2 est accessible à l'adresse \texttt{http://localhost:8081/h2-console} en mode développement.
+
+\subsection{MySQL (Production)}
+
+Pour l'environnement de production, le projet utilise \textbf{MySQL 8.0} via \textbf{XAMPP}. La base de données \texttt{educationn} est créée automatiquement au démarrage grâce à l'option \texttt{createDatabaseIfNotExist=true}.
+
+\begin{table}[H]
+\centering
+\caption{Configuration MySQL}
+\label{tab:mysql_config}
+\begin{tabular}{ll}
+\toprule
+\textbf{Paramètre} & \textbf{Valeur} \\
+\midrule
+Serveur & localhost:3306 \\
+Base de données & educationn \\
+Utilisateur & root \\
+Pilote JDBC & mysql-connector-j 8.0.33 \\
+Outil & XAMPP (Apache + MySQL) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{JPA / Hibernate (ORM)}
+
+\textbf{JPA} (\textit{Java Persistence API}) est la spécification standard Java pour le mapping objet-relationnel (ORM). \textbf{Hibernate} en est l'implémentation la plus populaire, intégrée nativement dans Spring Boot.
+
+\vspace{0.3cm}
+
+Dans notre projet, Hibernate assure :
+\begin{itemize}[noitemsep]
+    \item Le \textbf{mapping automatique} entre les classes Java (entités) et les tables de la base de données ;
+    \item La \textbf{génération automatique du schéma} (\texttt{ddl-auto=update}) : Hibernate crée et met à jour les tables en fonction des entités ;
+    \item La gestion des \textbf{relations} (OneToMany, ManyToOne, ManyToMany) via des annotations ;
+    \item L'utilisation de la stratégie d'\textbf{héritage SINGLE\_TABLE} pour la hiérarchie User → Admin / Enseignant / Étudiant.
+\end{itemize}
+
+\begin{lstlisting}[language=Java,caption={Exemple de mapping JPA — Entité User (extrait)}]
+@Entity
+@Table(name = "users")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "user_type")
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(unique = true, nullable = false)
+    private String email;
+
+    @Column(nullable = false)
+    private String password;
+
+    private String firstName;
+    private String lastName;
+
+    @OneToMany(mappedBy = "user")
+    private List<Notification> notifications;
+    // ...
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java,caption={Héritage JPA — Entité Etudiant}]
+@Entity
+@DiscriminatorValue("ETUDIANT")
+public class Etudiant extends User {
+    private String niveau;  // L1, L2, L3, M1, M2
+
+    @ManyToOne
+    @JoinColumn(name = "groupe_id")
+    private Groupe groupe;
+
+    @ManyToOne
+    @JoinColumn(name = "departement_id")
+    private Departement departement;
+
+    @ManyToMany(mappedBy = "etudiants")
+    private List<Cours> cours;
+    // ...
+}
+\end{lstlisting}
+
+\vspace{0.5cm}
+
+La figure~\ref{fig:env_resume} résume l'ensemble de l'environnement technique du projet :
+
+\begin{table}[H]
+\centering
+\caption{Résumé de l'environnement technique}
+\label{fig:env_resume}
+\begin{tabularx}{\textwidth}{llX}
+\toprule
+\textbf{Couche} & \textbf{Technologie} & \textbf{Rôle} \\
+\midrule
+Backend & Spring Boot 3.5.10 & API REST (Java 17) \\
+Frontend & React + TypeScript & Interface utilisateur SPA \\
+Build (back) & Maven & Gestion des dépendances et build \\
+Build (front) & Vite & Bundler et serveur de développement \\
+Style & Tailwind CSS v4 & Framework CSS utilitaire \\
+Composants & Radix UI + MUI & Composants UI accessibles \\
+ORM & Hibernate / JPA & Mapping objet-relationnel \\
+BDD (dev) & H2 & Base embarquée pour le développement \\
+BDD (prod) & MySQL 8.0 & Base relationnelle de production \\
+Serveur DB & XAMPP & Environnement Apache + MySQL \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\newpage
