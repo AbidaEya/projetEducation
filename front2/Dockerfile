@@ -28,8 +28,8 @@ LABEL name="education-frontend" \
 # Install serve globally
 RUN npm install -g serve
 
-# Create non-root user for security (CORRECTED VERSION)
-RUN adduser -D -u 1000 appuser
+# Create non-root user for security (UID 1001 au lieu de 1000)
+RUN adduser -D -u 1001 appuser
 
 WORKDIR /app
 
