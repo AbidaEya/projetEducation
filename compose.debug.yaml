@@ -1,6 +1,0 @@
-services:
-  educationbackendmaster:
-    image: educationbackendmaster
-    build:
-      context: .
-      dockerfile: ./Dockerfile

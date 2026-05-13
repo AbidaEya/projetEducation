@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mon-appli
+  namespace: default
+  labels:
+    app: education-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: education-backend
+  template:
+    metadata:
+      labels:
+        app: education-backend
+    spec:
+      containers:
+      - name: mon-conteneur-backend
+        image: ranya122/education-backend:latest
+        ports:
+        - containerPort: 8081
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: "mysql"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mon-appli-service
+spec:
+  selector:
+    app: education-backend
+  ports:
+  - port: 8081
+    targetPort: 8081
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mon-conteneur
+  namespace: default
+  labels:
+    app: education-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: education-frontend
+  template:
+    metadata:
+      labels:
+        app: education-frontend
+    spec:
+      containers:
+      - name: mon-conteneur-frontend
+        image: ranya122/education-frontend:latest
+        ports:
+        - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mon-conteneur-service
+spec:
+  selector:
+    app: education-frontend
+  ports:
+  - port: 3000
+    targetPort: 3000
+  type: NodePort
